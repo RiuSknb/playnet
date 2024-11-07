@@ -63,3 +63,15 @@ end
 gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
+
+# Authentication（認証関連）
+gem 'devise'
+
+# Pagination（ページネーション）
+gem 'kaminari'
+
+# Form Helpers（フォーム関連）
+gem 'simple_form'
+
+# Rich Text（リッチテキスト関連）
+gem 'actiontext'
