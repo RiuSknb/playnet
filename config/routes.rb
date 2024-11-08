@@ -17,14 +17,15 @@ Rails.application.routes.draw do
 
     # Postsコントローラ
     resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
-      resources :comments, only: [:create, :destroy]
-      resources :likes, only: [:create, :destroy]
+      resources :comments, only: [:create, :destroy], param: :id, defaults: { commentable_type: 'Post' }
+      resources :likes, only: [:create, :destroy], param: :id, defaults: { likeable_type: 'Post' }
+      # , param: :id, defaults: { commentable_type: 'Event' }を追記
     end
 
     # Eventsコントローラ
     resources :events, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
-      resources :comments, only: [:create, :destroy]
-      resources :likes, only: [:create, :destroy]
+      resources :comments, only: [:create, :destroy], param: :id, defaults: { commentable_type: 'Event' }
+      resources :likes, only: [:create, :destroy], param: :id, defaults: { likeable_type: 'Post' }
     end
 
     # Genresコントローラ
@@ -54,12 +55,12 @@ Rails.application.routes.draw do
 
     # Postsコントローラ
     resources :posts, only: [:index, :show, :edit, :update, :destroy] do
-      resources :comments, only: [:destroy]
+      resources :comments, only: [:destroy], param: :id, defaults: { commentable_type: 'Post' }
     end
 
     # Eventsコントローラ
     resources :events, only: [:index, :show, :edit, :update, :destroy] do
-      resources :comments, only: [:destroy]
+      resources :comments, only: [:destroy], param: :id, defaults: { commentable_type: 'Event' }
     end
 
     # Genresコントローラ
