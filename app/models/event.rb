@@ -1,4 +1,7 @@
 class Event < ApplicationRecord
+  has_many :comments, as: :commentable
+  has_many :likes, as: :likeable
+  
   belongs_to :user
   belongs_to :genre, optional: true
   belongs_to :game, optional: true
