@@ -9,10 +9,6 @@ Rails.application.routes.draw do
     root to: "homes#top"
 
     # Usersコントローラ
-    devise_for :users, controllers: {
-      sessions: 'public/users/sessions',
-      registrations: 'public/users/registrations'
-    }
     resources :users, only: [:index, :new, :show, :edit, :update, :destroy] do
       collection do
         get 'mypage', to: 'users#mypage' # マイページ用のカスタムルート
@@ -41,7 +37,7 @@ Rails.application.routes.draw do
     resources :groups, only: [:new, :index, :show, :create, :edit, :update, :destroy]
 
     # Group_membersコントローラ
-    resources :group_members, only: [:new, :index, :show, :create, :edit, :update, :destroy]
+    resources :group_members
   end
 
 
@@ -80,4 +76,4 @@ Rails.application.routes.draw do
   end
 end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-end
+
