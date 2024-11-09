@@ -11,10 +11,13 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application' %>
   </head>
 
   <body>
+    <%= render 'layouts/header' %>
+    <%# ビューの中身 %>
     <%= yield %>
+    <%= render 'layouts/footer' %>
   </body>
 </html>
