@@ -31,3 +31,10 @@
 
 en:
   hello: "Hello world"
+
+  activerecord:
+    errors:
+      messages:
+      # 新規登録時
+        taken: "  *すでに使用されています"
+        blank: " *入力してください"
