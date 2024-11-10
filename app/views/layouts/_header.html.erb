@@ -1,6 +1,6 @@
 <div style="background-color: #ffcccb; padding: 10px;">
   <% if user_signed_in? %>
-    <p>こんにちは、<%= current_user.email %>さん</p>
+    <p><%= current_user.name %>さん、こんにちは！</p>
     <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
   <% else %> 
     <%= link_to 'ログイン', new_user_session_path %> |

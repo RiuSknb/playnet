@@ -3,8 +3,7 @@
   <head>
     <title>Playnet</title>
     <%# 11/07追記 %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+
     
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
@@ -16,6 +15,9 @@
 
   <body>
     <%= render 'layouts/header' %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    
     <%# ビューの中身 %>
     <%= yield %>
     <%= render 'layouts/footer' %>
