@@ -29,8 +29,9 @@ Rails.application.routes.draw do
     end
 
     # Genresコントローラ
-    resources :genres, only: [:index, :show]
-
+    resources :genres, only: [:index, :show] do
+      resources :posts, only: [:new, :create]
+    end
     # Gamesコントローラ
     resources :games, only: [:index, :show]
 

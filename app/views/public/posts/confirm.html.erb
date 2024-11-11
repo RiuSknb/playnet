@@ -1,9 +1,0 @@
-<% if @post %>
-  <h3>日記投稿の確認</h3>
-  <p>タイトル: <%= @post.title %></p>
-  <p>本文: <%= @post.body %></p>
-<% elsif @event %>
-  <h3>イベント投稿の確認</h3>
-  <p>タイトル: <%= @event.title %></p>
-  <p>詳細: <%= @event.body %></p>
-<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_11_051340) do
+ActiveRecord::Schema.define(version: 2024_11_11_201340) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -62,26 +62,6 @@ ActiveRecord::Schema.define(version: 2024_11_11_051340) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "events", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "genre_id"
-    t.integer "game_id"
-    t.integer "group_id"
-    t.string "title", null: false
-    t.text "body", null: false
-    t.string "place", null: false
-    t.datetime "date", null: false
-    t.boolean "is_deleted", default: false
-    t.string "deleted_by"
-    t.text "deleted_reason"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_events_on_game_id"
-    t.index ["genre_id"], name: "index_events_on_genre_id"
-    t.index ["group_id"], name: "index_events_on_group_id"
-    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -141,11 +121,13 @@ ActiveRecord::Schema.define(version: 2024_11_11_051340) do
     t.integer "genre_id", null: false
     t.integer "game_id", null: false
     t.integer "group_id"
-    t.string "title", null: false
-    t.text "body", null: false
+    t.string "title"
+    t.text "body"
+    t.string "place"
+    t.datetime "date"
+    t.string "post_type"
     t.boolean "is_deleted", default: false
-    t.string "deleted_by"
-    t.text "deleted_reason"
+    t.integer "deleted_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_posts_on_game_id"
@@ -172,10 +154,6 @@ ActiveRecord::Schema.define(version: 2024_11_11_051340) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
-  add_foreign_key "events", "games"
-  add_foreign_key "events", "genres"
-  add_foreign_key "events", "groups"
-  add_foreign_key "events", "users"
   add_foreign_key "games", "genres"
   add_foreign_key "group_members", "groups"
   add_foreign_key "group_members", "users"
