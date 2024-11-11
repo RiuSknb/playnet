@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     # Usersコントローラ
     resources :users, only: [:index, :new, :show, :edit, :update, :destroy] do
       collection do
-        get 'mypage', to: 'users#mypage' # マイページ用のカスタムルート
+        get 'mypage', to: 'users#mypage', as: 'mypage' # マイページ用のカスタムルート
       end
     end
 
@@ -29,8 +29,9 @@ Rails.application.routes.draw do
     end
 
     # Genresコントローラ
-    resources :genres, only: [:index, :show]
-
+    resources :genres, only: [:index, :show] do
+      resources :posts, only: [:new, :create]
+    end
     # Gamesコントローラ
     resources :games, only: [:index, :show]
 

@@ -1,2 +1,105 @@
-<h1>Public::Posts#new</h1>
-<p>Find me in app/views/public/posts/new.html.erb</p>
+<%= form_with model: @post, url: posts_path(game_id: @game.id) do |f| %>
+
+  <% if @post.errors.any? %>
+    <div class="error_messages">
+      <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </li>
+    </div>
+  <% end %>
+
+  <div>
+    <strong>ゲーム名:</strong> <%= @game.title %>
+  </div>
+  <div>
+    <strong>ジャンル名:</strong> <%= @genre.name %>
+  </div>
+
+  <!-- game_id を隠しフィールドで送信 -->
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.hidden_field :game_id, value: @game.id %>  <!-- @gameが事前に設定されている前提 -->
+
+  <!-- 日記/イベントの選択 -->
+  <%= f.label :post_type, "投稿の種類" %>
+  <%= f.select :post_type, options_for_select([['', ''], ['日記', 'diary'], ['イベント', 'event']]), {}, { onchange: 'toggleForm()' } %>
+
+  <!-- 日記フォーム -->
+  <div id="diary_form" style="display:none;">
+    <%= render 'public/posts/diary_form', f: f %>
+  </div>
+
+  <!-- イベントフォーム -->
+  <div id="event_form" style="display:none;">
+    <%= render 'public/posts/event_form', f: f %>
+  </div>
+
+  <%= f.submit "内容確認へ", disabled: true, id: 'submit_button' %>
+<% end %>
+
+<script>
+// 投稿タイプが変更されたときにフォームを切り替える関数
+  function toggleForm() {
+    var postType = document.getElementById('post_post_type').value;
+
+    // 日記が選択された場合
+    if (postType === 'diary') {
+      document.getElementById('diary_form').style.display = 'block';
+      document.getElementById('event_form').style.display = 'none';
+      // イベントフォームのフィールドを無効化
+      disableEventForm();
+    }
+    // イベントが選択された場合
+    else if (postType === 'event') {
+      document.getElementById('event_form').style.display = 'block';
+      document.getElementById('diary_form').style.display = 'none';
+      // 日記フォームのフィールドを無効化
+      disableDiaryForm();
+    }
+
+    else {
+      // 両方非表示にする
+      document.getElementById('diary_form').style.display = 'none';
+      document.getElementById('event_form').style.display = 'none';
+    }
+    
+    // フォームが表示されるようにしたときに、submitボタンを有効にする
+    checkFormValidity();
+  }
+
+// 日記フォームのフィールドを無効化する関数
+  function disableDiaryForm() {
+    // 日記フォームのフィールドを無効化
+    var diaryFields = document.querySelectorAll('#diary_form input, #diary_form select, #diary_form textarea');
+    diaryFields.forEach(function(field) {
+      field.disabled = true;
+    });
+  }
+
+  // イベントフォームのフィールドを無効化する関数
+  function disableEventForm() {
+    // イベントフォームのフィールドを無効化
+    var eventFields = document.querySelectorAll('#event_form input, #event_form select, #event_form textarea');
+    eventFields.forEach(function(field) {
+      field.disabled = true;
+    });
+  }
+
+  // フォームが有効かチェックして、submitボタンの有効/無効を切り替える関数
+  function checkFormValidity() {
+    var postType = document.getElementById('post_post_type').value;
+    var submitButton = document.getElementById('submit_button');
+    
+    if (postType && document.querySelector('form').checkValidity()) {
+      submitButton.disabled = false;  // フォームが有効な場合はボタンを有効にする
+    } else {
+      submitButton.disabled = true;  // フォームが無効な場合はボタンを無効にする
+    }
+  }
+
+  // ページロード時にチェック
+  document.addEventListener('DOMContentLoaded', function() {
+    checkFormValidity();
+  });
+</script>

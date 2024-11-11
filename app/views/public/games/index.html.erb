@@ -1,2 +1,10 @@
-<h1>Public::Games#index</h1>
-<p>Find me in app/views/public/games/index.html.erb</p>
+<h1>ゲーム一覧</h1>
+
+<% @genres.each do |genre| %>
+  <h2><%= genre.name %></h2>
+  <ul>
+    <% genre.games.each do |game| %>
+      <li><%= link_to game.title, game_path(game) %></li>
+    <% end %>
+  </ul>
+<% end %>
