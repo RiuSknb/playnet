@@ -1,2 +1,5 @@
-<h1>Public::Games#show</h1>
-<p>Find me in app/views/public/games/show.html.erb</p>
+<h1><%= @game.title %></h1>
+<p>このゲームについて投稿する！</p>
+<%=link_to '投稿', new_post_path(game_id: @game.id) %><br>
+
+<%= link_to 'ゲーム一覧へ戻る', games_path %> <!-- ゲーム一覧に戻るリンク -->

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_08_100030) do
+ActiveRecord::Schema.define(version: 2024_11_11_051340) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -138,8 +138,8 @@ ActiveRecord::Schema.define(version: 2024_11_08_100030) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "genre_id"
-    t.integer "game_id"
+    t.integer "genre_id", null: false
+    t.integer "game_id", null: false
     t.integer "group_id"
     t.string "title", null: false
     t.text "body", null: false

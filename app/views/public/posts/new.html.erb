@@ -1,2 +1,49 @@
-<h1>Public::Posts#new</h1>
-<p>Find me in app/views/public/posts/new.html.erb</p>
+<%= form_with model: @post, url: posts_path do |f| %>
+  <!-- 日記/イベントの選択 -->
+  <%= f.label :post_type, "投稿の種類" %>
+  <%= f.select :post_type, options_for_select([['日記', 'diary'], ['イベント', 'event']]), {}, { onchange: 'toggleForm()' } %>
+
+  <!-- 日記フォーム -->
+  <div id="diary_form" style="display:none;">
+    <%= render 'public/posts/diary_form', f: f %>
+  </div>
+
+  <!-- イベントフォーム -->
+  <div id="event_form" style="display:none;">
+    <%= render 'public/posts/event_form', f: f %>
+  </div>
+
+  <%= f.submit "内容確認へ", disabled: true, id: 'submit_button' %>
+<% end %>
+
+<script>
+  function toggleForm() {
+    var postType = document.getElementById('post_post_type').value;
+    if (postType === 'diary') {
+      document.getElementById('diary_form').style.display = 'block';
+      document.getElementById('event_form').style.display = 'none';
+    } else if (postType === 'event') {
+      document.getElementById('event_form').style.display = 'block';
+      document.getElementById('diary_form').style.display = 'none';
+    }
+    
+    // フォームが表示されるようにしたときに、submitボタンを有効にする
+    checkFormValidity();
+  }
+
+  function checkFormValidity() {
+    var postType = document.getElementById('post_post_type').value;
+    var submitButton = document.getElementById('submit_button');
+    
+    if (postType && document.querySelector('form').checkValidity()) {
+      submitButton.disabled = false;  // フォームが有効な場合はボタンを有効にする
+    } else {
+      submitButton.disabled = true;  // フォームが無効な場合はボタンを無効にする
+    }
+  }
+
+  // ページロード時にチェック
+  document.addEventListener('DOMContentLoaded', function() {
+    checkFormValidity();
+  });
+</script>
