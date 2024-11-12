@@ -11,7 +11,7 @@
   <% end %>
 
   <div>
-    <strong>ゲーム名:</strong> <%= @game.title %>
+    <strong>ゲーム名:</strong> <%= @game.name %>
   </div>
   <div>
     <strong>ジャンル名:</strong> <%= @genre.name %>
@@ -35,7 +35,7 @@
     <%= render 'public/posts/event_form', f: f %>
   </div>
 
-  <%= f.submit "内容確認へ", disabled: true, id: 'submit_button' %>
+  <%= f.submit "投稿する", disabled: true, id: 'submit_button' %>
 <% end %>
 
 <script>

@@ -16,10 +16,15 @@ Rails.application.routes.draw do
     end
 
     # Postsコントローラ
-    resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
+    resources :posts, only: [:new, :show, :create, :edit, :update, :destroy] do
       resources :comments, only: [:create, :destroy], param: :id, defaults: { commentable_type: 'Post' }
       resources :likes, only: [:create, :destroy], param: :id, defaults: { likeable_type: 'Post' }
       # , param: :id, defaults: { commentable_type: 'Event' }を追記
+
+      collection do
+        get 'diaries'  # /public/posts/diaries
+        get 'events'   # /public/posts/events
+      end
     end
 
     # Eventsコントローラ

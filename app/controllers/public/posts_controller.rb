@@ -1,14 +1,24 @@
 class Public::PostsController < ApplicationController
+  before_action :authenticate_user!  # ログイン必須
+
+
   def new
     @game = Game.find(params[:game_id])
     @genre = Genre.find(@game.genre_id)
     @post = Post.new
   end
 
-  def index
+  def diaries
+    @posts = Post.where(is_deleted: false, post_type: 'diary').includes(:user, :game, :genre).order(created_at: :desc)
+  end
+
+  def events
+    
+    @posts = Post.where(post_type: 'event').includes(:user, :game, :genre)
   end
 
   def show
+    @post = Post.find(params[:id])
   end
 
 
@@ -18,8 +28,7 @@ class Public::PostsController < ApplicationController
 
     # `post_params` で `date` を組み立てる
     post_params = post_params()
-
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)  # current_userを投稿に関連付け
 
     if @post.save
       redirect_to @post, notice: '投稿が作成されました。'
@@ -30,12 +39,43 @@ class Public::PostsController < ApplicationController
   end
 
   def edit
+    @post = Post.find(params[:id])
   end
 
   def update
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      redirect_to post_path(@post), notice: '投稿が更新されました'
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @post = Post.find(params[:id])
+    if @post.user == current_user
+      if @post.update(genre_id: nil,
+                      game_id: nil,
+                      group_id: nil,
+                      title: "",
+                      body: "",
+                      place: "",
+                      date: "",
+                      is_deleted: true,
+                      deleted_by: 0)
+        if @post.post_type == "diary"
+          redirect_to diaries_posts_path, notice: '投稿が削除されました。'
+        else
+          redirect_to events_posts_path, notice: '投稿が削除されました。'
+        end
+      else
+        # バリデーションエラーメッセージをログに表示
+        Rails.logger.error @post.errors.full_messages.join(", ")
+        redirect_to diaries_posts_path, alert: '削除に失敗しました。'
+      end
+    else
+      redirect_to diaries_posts_path, alert: '削除権限がありません。'
+    end
   end
 
 
@@ -43,31 +83,6 @@ class Public::PostsController < ApplicationController
   
   # `post_params` で、date や他のフィールドを許可
   def post_params
-    params.require(:post).permit(
-      :game_id, :post_type, :genre_id, :title, :body, :place, :group_id, :user_id,
-      'date(1i)', 'date(2i)', 'date(3i)', 'date(4i)', 'date(5i)',
-      :date_1i, :date_2i, :date_3i, :date_4i, :date_5i
-    ).merge(date: build_date(params[:post]))
-  end
-
-  # `date` フィールドを DateTime オブジェクトに組み立て
-  def build_date(post_params)
-    # 日付の各パラメータが正しいかチェック
-    begin
-      year = post_params[:'date_1i'].to_i
-      month = post_params[:'date_2i'].to_i
-      day = post_params[:'date_3i'].to_i
-      hour = post_params[:'date_4i'].to_i
-      minute = post_params[:'date_5i'].to_i
-
-      # 日付のバリデーション
-      raise ArgumentError, 'Invalid date components' if month < 1 || month > 12 || day < 1 || day > 31
-
-      # DateTime オブジェクトを作成
-      DateTime.new(year, month, day, hour, minute)
-    rescue ArgumentError => e
-      # エラーが発生した場合に nil を返す
-      nil
-    end
+    params.require(:post).permit(:title, :body, :date, :place, :user_id, :game_id, :post_type, :genre_id, :group_id)
   end
 end

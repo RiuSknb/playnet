@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
   has_many :group_members
   has_many :groups, through: :group_members
+  has_many :posts
+  has_many :likes
+  has_many :comments
 
   
   # バリデーションを追加
