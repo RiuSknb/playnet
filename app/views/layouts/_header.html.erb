@@ -3,11 +3,12 @@
   <% if user_signed_in? %>
     <p><%= current_user.name %>さん、こんにちは！</p>
     <%= link_to 'Top', root_path %> |
-    <%= link_to 'Posts', posts_path %> |
+    <%= link_to 'Posts', diaries_posts_path %> |
+    <%= link_to 'Mypage', mypage_users_path %> |
     <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
   <% else %> 
     <%= link_to 'Top', root_path %> |
-    <%= link_to 'Posts', posts_path %>
+    <%= link_to 'Posts', posts_path %> |
     <%= link_to 'ログイン', new_user_session_path %> |
     <%= link_to '新規登録', new_user_registration_path %>
     

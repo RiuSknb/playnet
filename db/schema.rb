@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_11_201340) do
+ActiveRecord::Schema.define(version: 2024_11_12_093141) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2024_11_11_201340) do
 
   create_table "games", force: :cascade do |t|
     t.integer "genre_id", null: false
-    t.string "title", null: false
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["genre_id"], name: "index_games_on_genre_id"
@@ -118,8 +118,8 @@ ActiveRecord::Schema.define(version: 2024_11_11_201340) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "genre_id", null: false
-    t.integer "game_id", null: false
+    t.integer "genre_id"
+    t.integer "game_id"
     t.integer "group_id"
     t.string "title"
     t.text "body"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 2024_11_11_201340) do
     t.datetime "date"
     t.string "post_type"
     t.boolean "is_deleted", default: false
-    t.integer "deleted_by"
+    t.integer "deleted_by", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_posts_on_game_id"
