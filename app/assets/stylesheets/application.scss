@@ -1,0 +1,10 @@
+// application.scss
+@import 'actiontext';   // actiontext.scssが必要であればここに追加
+@import 'trix/dist/trix';
+
+
+.error {
+  color: #cd5c5c;
+  font-weight: bold;
+  font-size: 14px;
+}
