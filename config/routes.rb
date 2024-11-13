@@ -11,15 +11,20 @@ Rails.application.routes.draw do
     # Usersコントローラ
     resources :users, only: [:index, :new, :show, :edit, :update, :destroy] do
       collection do
-        get 'mypage', to: 'users#mypage' # マイページ用のカスタムルート
+        get 'mypage', to: 'users#mypage', as: 'mypage' # マイページ用のカスタムルート
       end
     end
 
     # Postsコントローラ
-    resources :posts, only: [:new, :index, :show, :create, :edit, :update, :destroy] do
+    resources :posts, only: [:new, :show, :create, :edit, :update, :destroy] do
       resources :comments, only: [:create, :destroy], param: :id, defaults: { commentable_type: 'Post' }
       resources :likes, only: [:create, :destroy], param: :id, defaults: { likeable_type: 'Post' }
       # , param: :id, defaults: { commentable_type: 'Event' }を追記
+
+      collection do
+        get 'diaries'  # /public/posts/diaries
+        get 'events'   # /public/posts/events
+      end
     end
 
     # Eventsコントローラ
@@ -29,8 +34,9 @@ Rails.application.routes.draw do
     end
 
     # Genresコントローラ
-    resources :genres, only: [:index, :show]
-
+    resources :genres, only: [:index, :show] do
+      resources :posts, only: [:new, :create]
+    end
     # Gamesコントローラ
     resources :games, only: [:index, :show]
 

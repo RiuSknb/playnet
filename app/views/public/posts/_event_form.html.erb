@@ -1,0 +1,7 @@
+<%= f.hidden_field :genre_id, value: @genre.id %>
+<%= f.hidden_field :game_id, value: @game.id %>
+<%= f.text_field :title, placeholder: "イベント名" %>
+<%= f.text_area :body, placeholder: "イベント詳細" %>
+<%= f.datetime_local_field :date, value: Date.today.to_s(:db), class: 'form-control' %>
+<%= f.text_field :place, placeholder: "開催場所" %>
+<%= f.select :group_id, options_for_select(current_user.groups.map { |group| [group.name, group.id] }), { include_blank: "選択してください" } %>

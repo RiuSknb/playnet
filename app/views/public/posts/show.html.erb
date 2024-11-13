@@ -1,2 +1,28 @@
-<h1>Public::Posts#show</h1>
-<p>Find me in app/views/public/posts/show.html.erb</p>
+<h5>投稿の詳細ページ</h5>
+
+<% if @post.user == current_user %>
+  <%= link_to '編集', edit_post_path(@post) %>
+<% end %>
+
+<% if @post.post_type == 'diary' %>
+  <!-- 日記の場合 -->
+  <p>投稿タイプ：日記</p>
+  <h2><%= @post.title %></h2>
+  <p><%= @post.body %></p>
+<% elsif @post.post_type == 'event' %>
+  <!-- イベントの場合 -->
+  <p>投稿タイプ：イベント</p>
+  <h2><%= @post.title %></h2>
+  <p><%= @post.body %></p>
+  <p><strong>開催場所:</strong> <%= @post.place %></p>
+  <p><strong>開催日時:</strong> <%= @post.date %></p>
+<% else %>
+  <!-- 他の投稿タイプがある場合（必要なら） -->
+  <p>投稿の種類が不明です。</p>
+<% end %>
+
+<% if @post.post_type == 'event' %>
+  <%= link_to '戻る（イベント一覧）', events_posts_path %>
+<% elsif @post.post_type == 'diary' %>
+  <%= link_to '戻る（日記一覧）', diaries_posts_path %>
+<% end %>

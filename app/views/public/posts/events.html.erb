@@ -1,0 +1,32 @@
+<h5>Find me in app/views/public/posts/events.html.erb</h5>
+
+<%= link_to "ゲームを選んでイベントを開く！", games_path, class: "btn btn-primary" %>
+
+
+<h1>イベント一覧</h1>
+<table>
+  <tr>
+    <th>type</th>
+    <th>true</th>
+    <th>投稿者</th>
+    <th>ゲーム</th>
+    <th>ジャンル</th>
+    <th>タイトル</th>
+    <th>編集</th>
+    <th>削除</th>
+  </tr>
+  <% @posts.each do |post| %>
+    <tr>
+      <td><%= post.post_type %></td>
+      <td><%= post.is_deleted %></td>
+      <td><%= post.user.name %></td>
+      <td><%= post.game.name %></td>
+      <td><%= post.genre.name %></td>
+      <td><%= link_to post.title, post_path(post) %></td>
+      <% if post.user == current_user && !post.is_deleted %>
+        <td><%= link_to '編集', edit_post_path(post) %>
+        <td><%= link_to '削除', post_path(post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
