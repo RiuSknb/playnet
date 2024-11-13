@@ -260,7 +260,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  actiontext
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
@@ -268,7 +267,7 @@ DEPENDENCIES
   dotenv-rails
   jbuilder (~> 2.7)
   kaminari
-  listen (~> 3.3)
+  listen
   mysql2
   net-imap
   net-pop
@@ -292,4 +291,4 @@ RUBY VERSION
    ruby 3.1.2p20
 
 BUNDLED WITH
-   2.3.19
+   2.5.23

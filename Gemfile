@@ -24,6 +24,8 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'terser'
 
+
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -41,7 +43,9 @@ group :development do
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 2.0'
-  gem 'listen', '~> 3.3'
+
+  gem 'listen'
+  
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
@@ -74,3 +78,4 @@ gem 'simple_form'
 gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
+
