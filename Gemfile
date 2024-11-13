@@ -62,10 +62,6 @@ group :production do
   gem 'mysql2'
 end
 
-gem "net-smtp"
-gem "net-pop"
-gem "net-imap"
-
 # Authentication（認証関連）
 gem 'devise'
 
@@ -75,5 +71,6 @@ gem 'kaminari'
 # Form Helpers（フォーム関連）
 gem 'simple_form'
 
-# Rich Text（リッチテキスト関連）
-gem 'actiontext'
+gem "net-smtp"
+gem "net-pop"
+gem "net-imap"
