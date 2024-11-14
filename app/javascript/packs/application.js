@@ -12,5 +12,10 @@ Turbolinks.start()
 import * as ActiveStorage from "@rails/activestorage"
 ActiveStorage.start()
 
+import "jquery";
+import "popper.js";
+import "bootstrap";
+import "../stylesheets/application"; 
+
 import "trix"
 import "@rails/actiontext"

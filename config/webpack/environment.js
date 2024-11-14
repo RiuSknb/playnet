@@ -1,14 +1,12 @@
-const { environment } = require('@rails/webpacker')
+const { environment } = require('@rails/webpacker');
+module.exports = environment;
 
 const webpack = require('webpack')
-
-// `node_modules`からの依存関係を正しく解決できるようにする
-environment.config.merge({
-  resolve: {
-    modules: [
-      'node_modules'
-    ]
-  }
-})
-
-module.exports = environment
+environment.plugins.prepend(
+  'Provide',
+  new webpack.ProvidePlugin({
+    $: 'jquery/src/jquery',
+    jQuery: 'jquery/src/jquery',
+    Popper: 'popper.js'
+  })
+)
